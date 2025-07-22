@@ -1,6 +1,3 @@
-const path = require("path");
-const fs = require("fs");
-
 exports.handler = async function (event, context) {
   // Authorization check
   const requestKey = event.headers["x-api-key"];
@@ -19,8 +16,8 @@ exports.handler = async function (event, context) {
     };
   }
 
-  const productsPath = path.resolve(__dirname, "products.json");
-  const data = JSON.parse(fs.readFileSync(productsPath, "utf8"));
+  const res = await axios.get('https://rabiee3-api.netlify.app/products.json');
+  const data = res.data;
 
   const { id } = event.queryStringParameters;
 
