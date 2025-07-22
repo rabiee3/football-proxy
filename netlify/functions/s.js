@@ -3,7 +3,7 @@ const axios = require("axios");
 exports.handler = async function (event) {
   const requestKey = event.headers["x-api-key"];
   const expectedKey = "rabiee3";
-  const API_KEY = process.env.API_FOOTBALL_KEY;
+  const API_KEY = process.env.FOOTBAL_API;
 
   const { date, leagueId, fixtureId } = event.queryStringParameters || {};
 
