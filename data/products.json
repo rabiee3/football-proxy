@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Wool Trench Coat",
+    "category": "Coat",
+    "brand": "Zara",
+    "sizes": ["S", "M", "L"],
+    "colors": ["Beige", "Black"],
+    "price": 129.99,
+    "image": "https://hes-delta.vercel.app/images/WhatsApp%20Image%202025-07-18%20at%2015.38.04_5a1005d8.jpg",
+    "description": "Elegant wool trench coat with belt and button details, perfect for cold seasons."
+  },
+  {
+    "id": 2,
+    "name": "Casual Crop Top",
+    "category": "Top",
+    "brand": "H&M",
+    "sizes": ["XS", "S", "M", "L"],
+    "colors": ["White", "Pink", "Blue"],
+    "price": 19.99,
+    "image": "https://hes-delta.vercel.app/images/WhatsApp%20Image%202025-07-18%20at%2015.29.57_d4a2d629.jpg",
+    "description": "Soft cotton crop top with a round neckline and relaxed fit."
+  },
+  {
+    "id": 3,
+    "name": "High-Waisted Skinny Jeans",
+    "category": "Jeans",
+    "brand": "Levi's",
+    "sizes": ["26", "28", "30", "32"],
+    "colors": ["Denim Blue", "Black"],
+    "price": 59.99,
+    "image": "https://hes-delta.vercel.app/images/WhatsApp%20Image%202025-07-18%20at%2015.29.57_e8688896.jpg",
+    "description": "Classic high-waisted skinny jeans with stretch fabric for a perfect fit."
+  },
+  {
+    "id": 4,
+    "name": "Stiletto Heels",
+    "category": "Heels",
+    "brand": "Aldo",
+    "sizes": ["36", "37", "38", "39", "40"],
+    "colors": ["Red", "Black", "Nude"],
+    "price": 74.99,
+    "image": "https://hes-delta.vercel.app/images/WhatsApp%20Image%202025-07-18%20at%2015.29.58_a432db4b.jpg",
+    "description": "Chic and elegant stiletto heels with a pointed toe and ankle strap."
+  },
+  {
+    "id": 5,
+    "name": "Leather Shoulder Bag",
+    "category": "Bag",
+    "brand": "Michael Kors",
+    "sizes": [],
+    "colors": ["Brown", "Black"],
+    "price": 149.99,
+    "image": "https://hes-delta.vercel.app/images/WhatsApp%20Image%202025-07-18%20at%2015.29.58_d397b7de.jpg",
+    "description": "Premium leather shoulder bag with gold-tone hardware and spacious compartments."
+  }
+]

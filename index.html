@@ -1,2 +1,100 @@
-<h2>Please start using my API</h2>
-<h3>Through the url https://rabiee3-api.netlify.app/.netlify/functions/s?date=2025-07-22</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My API Docs</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #0070f3;
+    }
+
+    .endpoint {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .endpoint h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .method {
+      display: inline-block;
+      background: #0070f3;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+    }
+
+    .url {
+      font-family: monospace;
+      background: #eee;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    ul {
+      padding-left: 1rem;
+    }
+
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧩 My API Documentation</h1>
+
+  <h3>Base url : <span>https://rabiee3-api.netlify.app/.netlify/functions</span></h3>
+  <div class="endpoint">
+    <h2><span class="method">GET</span> /s</h2>
+    <p>Fetch football matches (proxy for API-SPORTS)</p>
+    <strong>Parameters:</strong>
+    <ul>
+      <li><code>date</code> (required): Match date (e.g. <code>2025-07-22</code>)</li>
+      <li><code>leagueId</code> (optional): Filter matches by league ID (e.g. <code>242</code>)</li>
+    </ul>
+    <strong>Example:</strong><br/>
+    <span class="url">/s?date=2025-07-22&leagueId=242</span>
+  </div>
+
+  <div class="endpoint">
+    <h2><span class="method">GET</span> /f</h2>
+    <p>Get food recipes from a static JSON file.</p>
+    <strong>Parameters:</strong>
+    <ul>
+      <li><code>id</code> (optional): Get a specific recipe by ID</li>
+    </ul>
+    <strong>Example:</strong><br/>
+    <span class="url">/f?id=2</span>
+  </div>
+
+  <div class="endpoint">
+    <h2><span class="method">GET</span> /p</h2>
+    <p>Get clothing product info from a static JSON file.</p>
+    <strong>Parameters:</strong>
+    <ul>
+      <li><code>id</code> (optional): Get a specific product by ID</li>
+    </ul>
+    <strong>Example:</strong><br/>
+    <span class="url">/p?id=5</span>
+  </div>
+</body>
+</html>

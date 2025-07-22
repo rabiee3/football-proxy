@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Pizza",
+    "ingredients": ["dough", "tomato sauce", "mozzarella cheese", "pepperoni", "oregano"],
+    "steps": ["Prepare dough", "Add sauce and toppings", "Bake in oven"],
+    "image": "https://hes-delta.vercel.app/data/pizzaaaaa.webp",
+    "price": 300
+  },
+  {
+    "id": 2,
+    "name": "Burger",
+    "ingredients": ["burger bun", "beef patty", "lettuce", "cheddar cheese", "tomato", "onion", "ketchup"],
+    "steps": ["Grill beef patty", "Assemble ingredients in bun"],
+    "image": "https://hes-delta.vercel.app/data/burger.png",
+    "price": 200
+  },
+  {
+    "id": 3,
+    "name": "Salad",
+    "ingredients": ["lettuce", "tomatoes", "cucumbers", "olive oil", "feta cheese", "olives"],
+    "steps": ["Chop vegetables", "Mix with dressing", "Add cheese and olives"],
+    "image": "https://hes-delta.vercel.app/data/salad.png",
+    "price": 150
+  },
+  {
+    "id": 4,
+    "name": "Fries",
+    "ingredients": ["potatoes", "salt", "vegetable oil"],
+    "steps": ["Cut potatoes", "Deep fry", "Sprinkle salt"],
+    "image": "https://hes-delta.vercel.app/data/FRIES3.png",
+    "price": 60
+  },
+  {
+    "id": 5,
+    "name": "Ice Cream",
+    "ingredients": ["milk", "sugar", "cream", "vanilla extract"],
+    "steps": ["Mix ingredients", "Freeze while churning"],
+    "image": "https://hes-delta.vercel.app/data/icecream.webp",
+    "price": 70
+  },
+  {
+    "id": 6,
+    "name": "Milkshake",
+    "ingredients": ["milk", "ice cream", "syrup", "whipped cream"],
+    "steps": ["Blend ingredients", "Top with whipped cream"],
+    "image": "https://hes-delta.vercel.app/data/milkshake.webp",
+    "price": 100
+  }
+]
