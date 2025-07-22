@@ -19,7 +19,7 @@ exports.handler = async function (event, context) {
     };
   }
 
-  const productsPath = path.resolve(__dirname, "../../data/products.json");
+  const productsPath = path.resolve(__dirname, "products.json");
   const data = JSON.parse(fs.readFileSync(productsPath, "utf8"));
 
   const { id } = event.queryStringParameters;
