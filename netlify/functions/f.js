@@ -35,7 +35,7 @@ exports.handler = async function (event, context) {
       },
     });
 
-    let data = response.data;
+    let data = response;
 
     // If leagueId is present, filter the fixtures
     if (leagueId) {
