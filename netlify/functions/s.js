@@ -1,46 +1,52 @@
 const axios = require("axios");
 
-exports.handler = async function (event, context) {
-  // Authorization check
+exports.handler = async function (event) {
   const requestKey = event.headers["x-api-key"];
   const expectedKey = "rabiee3";
+  const API_KEY = process.env.API_FOOTBALL_KEY;
+
+  const { date, leagueId, fixtureId } = event.queryStringParameters || {};
 
   if (!requestKey || requestKey !== expectedKey) {
     return {
-      headers: {
-        "Content-Type": "application/json",
-      },
       statusCode: 401,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        error:
-          "Unauthorized: (Please don't forget x-api-key secret in the request header ya shabab)",
+        error: "Unauthorized: Invalid or missing API key",
       }),
     };
   }
 
-  const API_KEY = "8193377f2e3e92ac46c7ad11fcdf749c";
-
-  const { date , leagueId } = event.queryStringParameters;
-
   if (!API_KEY) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "API key missing" }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: "Missing API_FOOTBALL_KEY" }),
     };
   }
 
-  const url = `https://v3.football.api-sports.io/fixtures?date=${date}`;
+  let url = "";
+  if (fixtureId) {
+    url = `https://v3.football.api-sports.io/fixtures?id=${fixtureId}`;
+  } else if (date) {
+    url = `https://v3.football.api-sports.io/fixtures?date=${date}`;
+  } else {
+    return {
+      statusCode: 400,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: 'Missing required "date" or "fixtureId"' }),
+    };
+  }
 
   try {
-    const response = await axios.get(url, {
-      headers: {
-        "x-apisports-key": process.env.FOOTBAL_API,
-      },
+    const apiRes = await axios.get(url, {
+      headers: { "x-apisports-key": API_KEY },
     });
 
-    let data = response.data;
+    const data = apiRes.data;
 
-    if (leagueId) {
+    // Optional filtering by league ID (only for date-based queries)
+    if (!fixtureId && leagueId) {
       const idAsNumber = parseInt(leagueId);
       data.response = data.response.filter(
         (match) => match.league.id === idAsNumber
@@ -48,15 +54,14 @@ exports.handler = async function (event, context) {
     }
 
     return {
-      headers: {
-        "Content-Type": "application/json",
-      },
       statusCode: 200,
-      body: JSON.stringify(response.data),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     };
   } catch (err) {
     return {
       statusCode: err.response?.status || 500,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         error: err.message,
         detail: err.response?.data || null,
