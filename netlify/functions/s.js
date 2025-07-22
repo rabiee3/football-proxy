@@ -38,6 +38,8 @@ exports.handler = async function (event, context) {
       },
     });
 
+    let data = response.data;
+
     if (leagueId) {
       const idAsNumber = parseInt(leagueId);
       data.response = data.response.filter(
