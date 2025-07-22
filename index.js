@@ -4,18 +4,18 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const API_KEY = process.env.FOOTBALL_API_KEY; // Set this in Render later
+const API_KEY = '8193377f2e3e92ac46c7ad11fcdf749c'; // Set this in Render later
 
 app.use(cors());
 
-app.get('/fixtures', async (req, res) => {
+app.get('/football', async (req, res) => {
   const { date, type = 'Friendly' } = req.query;
 
   if (!API_KEY) {
     return res.status(500).json({ error: 'API key missing' });
   }
 
-  const url = `https://v3.football.api-sports.io/fixtures?date=${date}&type=${type}`;
+  const url = `https://v3.football.api-sports.io/fixtures?date=${date}`;
 
   try {
     const response = await axios.get(url, {
