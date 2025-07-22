@@ -1,3 +1,4 @@
+const axios = require('axios');
 exports.handler = async function (event, context) {
   // Authorization check
   const requestKey = event.headers["x-api-key"];
