@@ -7,6 +7,9 @@ exports.handler = async function (event, context) {
 
   if (!requestKey || requestKey !== expectedKey) {
     return {
+      headers: {
+        "Content-Type": "application/json",
+      },
       statusCode: 401,
       body: JSON.stringify({
         error:
@@ -17,7 +20,7 @@ exports.handler = async function (event, context) {
 
   const API_KEY = "8193377f2e3e92ac46c7ad11fcdf749c";
 
-  const { date, type = "Friendly" } = event.queryStringParameters;
+  const { date , leagueId } = event.queryStringParameters;
 
   if (!API_KEY) {
     return {
@@ -35,7 +38,17 @@ exports.handler = async function (event, context) {
       },
     });
 
+    if (leagueId) {
+      const idAsNumber = parseInt(leagueId);
+      data.response = data.response.filter(
+        (match) => match.league.id === idAsNumber
+      );
+    }
+
     return {
+      headers: {
+        "Content-Type": "application/json",
+      },
       statusCode: 200,
       body: JSON.stringify(response.data),
     };

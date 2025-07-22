@@ -1,61 +1,30 @@
-const axios = require("axios");
+const path = require('path');
+const fs = require('fs');
 
-exports.handler = async function (event, context) {
-  // Authorization check
-  const requestKey = event.headers["x-api-key"];
-  const expectedKey = "rabiee3";
+exports.handler = async function(event, context) {
+  const recipesPath = path.resolve(__dirname, '../../data/recipes.json');
+  const data = JSON.parse(fs.readFileSync(recipesPath, 'utf8'));
 
-  if (!requestKey || requestKey !== expectedKey) {
-    return {
-      statusCode: 401,
-      body: JSON.stringify({
-        error:
-          "Unauthorized: (Please don't forget x-api-key secret in the request header ya shabab)",
-      }),
-    };
-  }
+  const { id } = event.queryStringParameters;
 
-  const API_KEY = process.env.API_KEY;
-
-  const { date, leagueId } = event.queryStringParameters;
-
-  if (!API_KEY) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "API key missing" }),
-    };
-  }
-
-  const url = `https://v3.football.api-sports.io/fixtures?date=${date}`;
-
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        "x-apisports-key": API_KEY,
-      },
-    });
-
-    let data = response;
-
-    // If leagueId is present, filter the fixtures
-    if (leagueId) {
-      const idAsNumber = parseInt(leagueId);
-      data.response = data.response.filter(
-        (match) => match.league.id === idAsNumber
-      );
+  if (id) {
+    const recipe = data.find(r => r.id === parseInt(id));
+    if (recipe) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(recipe)
+      };
+    } else {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ error: "Recipe not found" })
+      };
     }
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data),
-    };
-  } catch (err) {
-    return {
-      statusCode: err.response?.status || 500,
-      body: JSON.stringify({
-        error: err.message,
-        detail: err.response?.data || null,
-      }),
-    };
   }
+
+  // No ID: return all recipes
+  return {
+    statusCode: 200,
+    body: JSON.stringify(data)
+  };
 };

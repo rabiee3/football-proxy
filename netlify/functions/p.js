@@ -8,6 +8,9 @@ exports.handler = async function (event, context) {
 
   if (!requestKey || requestKey !== expectedKey) {
     return {
+      headers: {
+        "Content-Type": "application/json",
+      },
       statusCode: 401,
       body: JSON.stringify({
         error:
@@ -25,11 +28,17 @@ exports.handler = async function (event, context) {
     const product = data.find((p) => p.id === parseInt(id));
     if (product) {
       return {
+        headers: {
+          "Content-Type": "application/json",
+        },
         statusCode: 200,
         body: JSON.stringify(product),
       };
     } else {
       return {
+        headers: {
+          "Content-Type": "application/json",
+        },
         statusCode: 404,
         body: JSON.stringify({ error: "Product not found" }),
       };
