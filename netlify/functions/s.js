@@ -17,7 +17,7 @@ exports.handler = async function (event, context) {
   try {
     const response = await axios.get(url, {
       headers: {
-        'x-apisports-key': API_KEY
+        'x-apisports-key': process.env.FOOTBAL_API,
       }
     });
 
