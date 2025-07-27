@@ -8,6 +8,9 @@ exports.handler = async function (event, context) {
     return {
       headers: {
         "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
       },
       statusCode: 401,
       body: JSON.stringify({
@@ -28,6 +31,9 @@ exports.handler = async function (event, context) {
       return {
         headers: {
           "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Methods': '*'
         },
         statusCode: 200,
         body: JSON.stringify(product),
@@ -36,6 +42,9 @@ exports.handler = async function (event, context) {
       return {
         headers: {
           "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Methods': '*'
         },
         statusCode: 404,
         body: JSON.stringify({ error: "Product not found" }),

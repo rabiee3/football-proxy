@@ -10,7 +10,12 @@ exports.handler = async function (event) {
   if (!requestKey || requestKey !== expectedKey) {
     return {
       statusCode: 401,
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
+       },
       body: JSON.stringify({
         error: "Unauthorized: Invalid or missing API key",
       }),
@@ -20,7 +25,12 @@ exports.handler = async function (event) {
   if (!API_KEY) {
     return {
       statusCode: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
+       },
       body: JSON.stringify({ error: "Missing API_FOOTBALL_KEY" }),
     };
   }
@@ -55,13 +65,23 @@ exports.handler = async function (event) {
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
+       },
       body: JSON.stringify(data),
     };
   } catch (err) {
     return {
       statusCode: err.response?.status || 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
+       },
       body: JSON.stringify({
         error: err.message,
         detail: err.response?.data || null,
