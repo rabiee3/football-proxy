@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require("axios");
 exports.handler = async function (event, context) {
   // Authorization check
   const requestKey = event.headers["x-api-key"];
@@ -8,9 +8,9 @@ exports.handler = async function (event, context) {
     return {
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*'
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "*",
       },
       statusCode: 401,
       body: JSON.stringify({
@@ -20,7 +20,7 @@ exports.handler = async function (event, context) {
     };
   }
 
-  const res = await axios.get('https://rabiee3-api.netlify.app/products.json');
+  const res = await axios.get("https://rabiee3-api.netlify.app/products.json");
   const data = res.data;
 
   const { id } = event.queryStringParameters;
@@ -31,9 +31,9 @@ exports.handler = async function (event, context) {
       return {
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Methods': '*'
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Methods": "*",
         },
         statusCode: 200,
         body: JSON.stringify(product),
@@ -42,9 +42,9 @@ exports.handler = async function (event, context) {
       return {
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Methods': '*'
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Methods": "*",
         },
         statusCode: 404,
         body: JSON.stringify({ error: "Product not found" }),
@@ -54,6 +54,12 @@ exports.handler = async function (event, context) {
 
   // Return all products if no id is provided
   return {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Methods": "*",
+    },
     statusCode: 200,
     body: JSON.stringify(data),
   };
