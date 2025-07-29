@@ -1,6 +1,20 @@
 const axios = require("axios");
 
 exports.handler = async function (event) {
+
+  // Handle OPTIONS method for CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Or your origin
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+      body: '',
+    };
+  }
+
   const requestKey = event.headers["x-api-key"];
   const expectedKey = "rabiee3";
   const API_KEY = process.env.FOOTBAL_API;
