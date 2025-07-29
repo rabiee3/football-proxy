@@ -13,8 +13,6 @@ exports.handler = async function (event) {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
       },
       body: JSON.stringify({
         error: "Unauthorized: Invalid or missing API key",
@@ -28,8 +26,6 @@ exports.handler = async function (event) {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
       },
       body: JSON.stringify({ error: "Missing API_FOOTBALL_KEY" }),
     };
@@ -46,8 +42,6 @@ exports.handler = async function (event) {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
       },
       body: JSON.stringify({ error: 'Missing required "date" or "fixtureId"' }),
     };
@@ -73,8 +67,6 @@ exports.handler = async function (event) {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
       },
       body: JSON.stringify(data),
     };
@@ -84,8 +76,6 @@ exports.handler = async function (event) {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
       },
       body: JSON.stringify({
         error: err.message,
