@@ -1,18 +1,32 @@
 const axios = require("axios");
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, x-api-key",
+};
+
 exports.handler = async function (event, context) {
-  // Authorization check
+  // Handle preflight CORS request
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: "",
+    };
+  }
+
+  // API key authorization
   const requestKey = event.headers["x-api-key"];
   const expectedKey = "rabiee3";
 
   if (!requestKey || requestKey !== expectedKey) {
     return {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Allow-Methods": "*",
-      },
       statusCode: 401,
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         error:
           "Unauthorized: (Please don't forget x-api-key secret in the request header ya shabab)",
@@ -20,47 +34,55 @@ exports.handler = async function (event, context) {
     };
   }
 
-  const res = await axios.get("https://rabiee3-api.netlify.app/products.json");
-  const data = res.data;
+  try {
+    const res = await axios.get("https://rabiee3-api.netlify.app/products.json");
+    const data = res.data;
 
-  const { id } = event.queryStringParameters;
+    const { id } = event.queryStringParameters || {};
 
-  if (id) {
-    const product = data.find((p) => p.id === parseInt(id));
-    if (product) {
-      return {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "*",
-        },
-        statusCode: 200,
-        body: JSON.stringify(product),
-      };
-    } else {
-      return {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "*",
-        },
-        statusCode: 404,
-        body: JSON.stringify({ error: "Product not found" }),
-      };
+    if (id) {
+      const product = data.find((p) => p.id === parseInt(id));
+      if (product) {
+        return {
+          statusCode: 200,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        };
+      } else {
+        return {
+          statusCode: 404,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ error: "Product not found" }),
+        };
+      }
     }
-  }
 
-  // Return all products if no id is provided
-  return {
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "*",
-    },
-    statusCode: 200,
-    body: JSON.stringify(data),
-  };
+    // Return all products if no ID is provided
+    return {
+      statusCode: 200,
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        error: "Failed to fetch products",
+        detail: err.message,
+      }),
+    };
+  }
 };
