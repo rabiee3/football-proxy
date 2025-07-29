@@ -4,7 +4,7 @@
     "name": "Pizza",
     "ingredients": ["dough", "tomato sauce", "mozzarella cheese", "pepperoni", "oregano"],
     "steps": ["Prepare dough", "Add sauce and toppings", "Bake in oven"],
-    "image": "https://hes-delta.vercel.app/data/pizzaaaaa.webp",
+    "image": "https://hes-delta.vercel.app/data/pizzaaaaa.png",
     "price": 300
   },
   {
@@ -36,7 +36,7 @@
     "name": "Ice Cream",
     "ingredients": ["milk", "sugar", "cream", "vanilla extract"],
     "steps": ["Mix ingredients", "Freeze while churning"],
-    "image": "https://hes-delta.vercel.app/data/icecream.webp",
+    "image": "https://hes-delta.vercel.app/data/icecream.png",
     "price": 70
   },
   {
@@ -44,7 +44,7 @@
     "name": "Milkshake",
     "ingredients": ["milk", "ice cream", "syrup", "whipped cream"],
     "steps": ["Blend ingredients", "Top with whipped cream"],
-    "image": "https://hes-delta.vercel.app/data/milkshake.webp",
+    "image": "https://hes-delta.vercel.app/data/milkshake.png",
     "price": 100
   }
 ]
