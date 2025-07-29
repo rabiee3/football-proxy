@@ -1,17 +1,18 @@
 const axios = require("axios");
 
-exports.handler = async function (event) {
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, x-api-key",
+};
 
+exports.handler = async function (event) {
   // Handle OPTIONS method for CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*', // Or your origin
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
-      body: '',
+      headers: corsHeaders,
+      body: "",
     };
   }
 
@@ -25,10 +26,8 @@ exports.handler = async function (event) {
     return {
       statusCode: 401,
       headers: {
+        ...corsHeaders,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       },
       body: JSON.stringify({
         error: "Unauthorized: Invalid or missing API key",
@@ -40,12 +39,10 @@ exports.handler = async function (event) {
     return {
       statusCode: 500,
       headers: {
+        ...corsHeaders,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       },
-      body: JSON.stringify({ error: "Missing API_FOOTBALL_KEY" }),
+      body: JSON.stringify({ error: "Missing FOOTBAL_API environment variable" }),
     };
   }
 
@@ -58,10 +55,8 @@ exports.handler = async function (event) {
     return {
       statusCode: 400,
       headers: {
+        ...corsHeaders,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       },
       body: JSON.stringify({ error: 'Missing required "date" or "fixtureId"' }),
     };
@@ -74,7 +69,7 @@ exports.handler = async function (event) {
 
     const data = apiRes.data;
 
-    // Optional filtering by league ID (only for date-based queries)
+    // Optional filter by league ID (if provided)
     if (!fixtureId && leagueId) {
       const idAsNumber = parseInt(leagueId);
       data.response = data.response.filter(
@@ -85,10 +80,8 @@ exports.handler = async function (event) {
     return {
       statusCode: 200,
       headers: {
+        ...corsHeaders,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       },
       body: JSON.stringify(data),
     };
@@ -96,10 +89,8 @@ exports.handler = async function (event) {
     return {
       statusCode: err.response?.status || 500,
       headers: {
+        ...corsHeaders,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       },
       body: JSON.stringify({
         error: err.message,
