@@ -1,30 +1,56 @@
-// netlify/functions/map-proxy.js
-const fetch = require('node-fetch');
+const axios = require("axios");
 
-exports.handler = async function(event, context) {
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+exports.handler = async function (event, context) {
+  // Handle CORS preflight
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: "",
+    };
+  }
+
   try {
-    const targetUrl = `https://meterops.ipesmart.co.za/map${event.path.replace('/.netlify/functions/map-proxy', '')}${event.rawQueryString ? '?' + event.rawQueryString : ''}`;
+    // Build target URL (preserve query string and path)
+    const targetUrl = `https://meterops.ipesmart.co.za/map${event.path.replace(
+      "/.netlify/functions/map-proxy",
+      ""
+    )}${event.rawQueryString ? "?" + event.rawQueryString : ""}`;
 
-    const response = await fetch(targetUrl);
-    const contentType = response.headers.get('content-type');
+    // Fetch the content
+    const res = await axios.get(targetUrl, {
+      responseType: "arraybuffer", // needed for images / tiles
+      headers: {
+        "User-Agent": "Netlify Proxy",
+      },
+    });
 
-    const buffer = await response.arrayBuffer();
-    const body = Buffer.from(buffer);
+    const contentType = res.headers["content-type"] || "text/html";
 
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': contentType || 'text/html',
-        'Access-Control-Allow-Origin': '*'
+        ...corsHeaders,
+        "Content-Type": contentType,
       },
-      body: body.toString('base64'),
-      isBase64Encoded: true
+      body: Buffer.from(res.data, "binary").toString("base64"),
+      isBase64Encoded: true,
     };
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return {
       statusCode: 500,
-      body: 'Proxy error'
+      headers: corsHeaders,
+      body: JSON.stringify({
+        error: "Failed to fetch map",
+        detail: err.message,
+      }),
     };
   }
 };
