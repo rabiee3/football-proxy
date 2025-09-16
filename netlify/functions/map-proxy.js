@@ -1,16 +1,13 @@
 // netlify/functions/map-proxy.js
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
-export async function handler(event, context) {
+exports.handler = async function(event, context) {
   try {
-    // Construct the target URL
     const targetUrl = `https://meterops.ipesmart.co.za/map${event.path.replace('/.netlify/functions/map-proxy', '')}${event.rawQueryString ? '?' + event.rawQueryString : ''}`;
 
-    // Fetch content from the original map server
     const response = await fetch(targetUrl);
     const contentType = response.headers.get('content-type');
 
-    // Read content as buffer (supports images, JS, CSS, HTML)
     const buffer = await response.arrayBuffer();
     const body = Buffer.from(buffer);
 
@@ -18,7 +15,7 @@ export async function handler(event, context) {
       statusCode: 200,
       headers: {
         'Content-Type': contentType || 'text/html',
-        'Access-Control-Allow-Origin': '*' // optional, for CORS
+        'Access-Control-Allow-Origin': '*'
       },
       body: body.toString('base64'),
       isBase64Encoded: true
@@ -30,4 +27,4 @@ export async function handler(event, context) {
       body: 'Proxy error'
     };
   }
-}
+};
