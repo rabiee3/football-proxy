@@ -7,18 +7,13 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-// Create an https agent that ignores SSL errors
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
 exports.handler = async function (event, context) {
   if (event.httpMethod === "OPTIONS") {
-    return {
-      statusCode: 200,
-      headers: corsHeaders,
-      body: "",
-    };
+    return { statusCode: 200, headers: corsHeaders, body: "" };
   }
 
   try {
@@ -28,7 +23,6 @@ exports.handler = async function (event, context) {
     )}${event.rawQueryString ? "?" + event.rawQueryString : ""}`;
 
     const res = await axios.get(targetUrl, {
-      responseType: "arraybuffer",
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
@@ -39,19 +33,16 @@ exports.handler = async function (event, context) {
         Referer: "https://erf-map.vercel.app/",
         Origin: "https://erf-map.vercel.app/",
       },
-      httpsAgent, // ignore SSL issues
+      httpsAgent,
     });
-
-    const contentType = res.headers["content-type"] || "text/html";
 
     return {
       statusCode: 200,
       headers: {
         ...corsHeaders,
-        "Content-Type": contentType,
+        "Content-Type": "text/html",
       },
-      body: Buffer.from(res.data, "binary").toString("base64"),
-      isBase64Encoded: true,
+      body: res.data,
     };
   } catch (err) {
     console.error(err);
