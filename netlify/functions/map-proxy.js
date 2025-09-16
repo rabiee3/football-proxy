@@ -29,7 +29,16 @@ exports.handler = async function (event, context) {
 
     const res = await axios.get(targetUrl, {
       responseType: "arraybuffer",
-      headers: { "User-Agent": "Netlify Proxy" },
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+          "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        Referer: "https://meterops.ipesmart.co.za/map/",
+        Origin: "https://meterops.ipesmart.co.za",
+      },
       httpsAgent, // ignore SSL issues
     });
 
