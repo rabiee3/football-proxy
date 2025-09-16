@@ -1,4 +1,5 @@
 const axios = require("axios");
+const https = require("https");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -6,8 +7,12 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
+// Create an https agent that ignores SSL errors
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 exports.handler = async function (event, context) {
-  // Handle CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
@@ -17,18 +22,15 @@ exports.handler = async function (event, context) {
   }
 
   try {
-    // Build target URL (preserve query string and path)
     const targetUrl = `https://meterops.ipesmart.co.za/map${event.path.replace(
       "/.netlify/functions/map-proxy",
       ""
     )}${event.rawQueryString ? "?" + event.rawQueryString : ""}`;
 
-    // Fetch the content
     const res = await axios.get(targetUrl, {
-      responseType: "arraybuffer", // needed for images / tiles
-      headers: {
-        "User-Agent": "Netlify Proxy",
-      },
+      responseType: "arraybuffer",
+      headers: { "User-Agent": "Netlify Proxy" },
+      httpsAgent, // ignore SSL issues
     });
 
     const contentType = res.headers["content-type"] || "text/html";
