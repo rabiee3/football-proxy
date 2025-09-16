@@ -22,7 +22,7 @@ exports.handler = async function (event, context) {
   }
 
   try {
-    const targetUrl = `https://meterops.ipesmart.co.za/map${event.path.replace(
+    const targetUrl = `https://erf-map.vercel.app${event.path.replace(
       "/.netlify/functions/map-proxy",
       ""
     )}${event.rawQueryString ? "?" + event.rawQueryString : ""}`;
@@ -36,8 +36,8 @@ exports.handler = async function (event, context) {
         Accept:
           "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
-        Referer: "https://meterops.ipesmart.co.za/map/",
-        Origin: "https://meterops.ipesmart.co.za",
+        Referer: "https://erf-map.vercel.app/",
+        Origin: "https://erf-map.vercel.app/",
       },
       httpsAgent, // ignore SSL issues
     });
